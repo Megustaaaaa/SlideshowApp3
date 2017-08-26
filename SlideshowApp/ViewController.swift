@@ -9,17 +9,155 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let imageNames = ["p１.JPG", "p２.JPG", "p３.JPG", "p４.JPG", "p５.JPG"]
+    
+    var imageIndex = 0
+    
+    var timer: Timer!
 
+
+    
+
+    
+    
+    @IBOutlet weak var imageview: UIImageView!
+    
+    
+    @IBOutlet weak var nextbutton: UIButton!
+    
+    @IBOutlet weak var playbutton: UIButton!
+    
+    @IBOutlet weak var backbutton: UIButton!
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // シングルタップ
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.tap(_:)))
+        
+        // デリゲートをセット
+        tapGesture.delegate = self as? UIGestureRecognizerDelegate;
+        
+        
+        // imageviewに追加.
+        self.imageview.addGestureRecognizer(tapGesture)
+        
     }
-
+    
+    // タップイベント.
+    func tap(_ sender: UITapGestureRecognizer){
+        
+        if timer != nil {
+            timer.invalidate()   // 現在のタイマーを破棄する
+            timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
+        }
+        
+         imageview.image = UIImage(named: imageNames[imageIndex])
+        
+        
+        performSegue(withIdentifier: "Fullscreen", sender: nil)
+        
+        
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if (segue.identifier == "Fullscreen") {
+        
+        let ViewController2:ViewController2 = segue.destination as! ViewController2
+            ViewController2.imageNames = ["p１.JPG", "p２.JPG", "p３.JPG", "p４.JPG", "p５.JPG"]
+            ViewController2.imageIndex = imageIndex
+ 
+    }
+    }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    
+    @IBAction func nextbutton(_ sender: Any) {
+    
+        
+        imageIndex += 1
+        
+        //最後の画像で進むボタンを押すと最初の画像になる
+        if imageIndex >= 5 {
+            imageIndex = 0
+        }
+        
+        
+        imageview.image = UIImage(named: imageNames[imageIndex])
+    }
+    
+    
+    @IBAction func backbutton(_ sender: Any) {
+    
+        imageIndex -= 1
+        
+        //最初の画像で戻るボタンを押すと最後の画像になる
+        if imageIndex >= -1 {
+            imageIndex = 4
+        }
+        
+        imageview.image = UIImage(named: imageNames[imageIndex])
+     }
+    
 
+    
+    //時間が来た時の動作
+    func playpause() {
+        
+        imageIndex += 1
+        
+        
+        //最後の画像になったら最初に戻る
+        if imageIndex >= 5 {
+            imageIndex = 0
+        }
+        
+        
+        
+        imageview.image = UIImage(named: imageNames[imageIndex])
+    }
+    
+    
+    @IBAction func playbutton(_ sender: Any) {
+        if timer == nil {
+            timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(playpause), userInfo: nil, repeats: true)
+            
+            
+            
+            nextbutton.isEnabled = false    //ボタン無効
+            backbutton.isEnabled = false    //ボタン無効
+        }
+        else {
+            timer.invalidate()
+            timer = nil
+            
+            nextbutton.isEnabled = true     //ボタン有効
+            backbutton.isEnabled = true     //ボタン有効
+        }
+        
+        
+        
+            imageview.image = UIImage(named: imageNames[imageIndex])
+        
+    }
+    
+    
+    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+    }
+    
 
-}
-
+    }
