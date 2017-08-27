@@ -14,11 +14,9 @@ class ViewController2: UIViewController {
     
     @IBOutlet weak var imageview2: UIImageView!
     
-    var imageNames = ["p１.JPG", "p２.JPG", "p３.JPG", "p４.JPG", "p５.JPG"]
-    var imageIndex = 0
-    var image: UIImage!
-
-
+    var imageName = ""
+    
+    
     
     
     
@@ -26,11 +24,8 @@ class ViewController2: UIViewController {
         super.viewDidLoad()
         
         
-        imageview2.image = UIImage(named: imageNames[imageIndex])
-        imageNames = ["p１.JPG", "p２.JPG", "p３.JPG", "p４.JPG", "p５.JPG"]
-        imageIndex = 0
-
-
+        imageview2.image = UIImage(named: imageName)
+      
 
 
     

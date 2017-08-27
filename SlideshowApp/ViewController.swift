@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     var imageIndex = 0
     
     var timer: Timer!
-
-
     
-
+    
+    
+    
     
     
     @IBOutlet weak var imageview: UIImageView!
@@ -54,11 +54,15 @@ class ViewController: UIViewController {
         if timer != nil {
             timer.invalidate()   // 現在のタイマーを破棄する
             timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
+            
+            nextbutton.isEnabled = true     //ボタン有効
+            backbutton.isEnabled = true     //ボタン有効
         }
         
-         imageview.image = UIImage(named: imageNames[imageIndex])
+        imageview.image = UIImage(named: imageNames[imageIndex])
         
         
+        //タップ時にFullscreenに遷移させる
         performSegue(withIdentifier: "Fullscreen", sender: nil)
         
         
@@ -67,13 +71,13 @@ class ViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        //segueにつなぐ
         if (segue.identifier == "Fullscreen") {
-        
-        let ViewController2:ViewController2 = segue.destination as! ViewController2
-            ViewController2.imageNames = ["p１.JPG", "p２.JPG", "p３.JPG", "p４.JPG", "p５.JPG"]
-            ViewController2.imageIndex = imageIndex
- 
-    }
+            
+            let viewController2:ViewController2 = segue.destination as! ViewController2
+            viewController2.imageName = imageNames[imageIndex]
+            
+        }
     }
     
     
@@ -87,12 +91,12 @@ class ViewController: UIViewController {
     
     
     @IBAction func nextbutton(_ sender: Any) {
-    
+        
         
         imageIndex += 1
         
         //最後の画像で進むボタンを押すと最初の画像になる
-        if imageIndex >= 5 {
+        if imageIndex >= imageNames.count {
             imageIndex = 0
         }
         
@@ -102,18 +106,18 @@ class ViewController: UIViewController {
     
     
     @IBAction func backbutton(_ sender: Any) {
-    
+        
         imageIndex -= 1
         
         //最初の画像で戻るボタンを押すと最後の画像になる
         if imageIndex >= -1 {
-            imageIndex = 4
+            imageIndex = imageNames.count - 1
         }
         
         imageview.image = UIImage(named: imageNames[imageIndex])
-     }
+    }
     
-
+    
     
     //時間が来た時の動作
     func playpause() {
@@ -136,6 +140,7 @@ class ViewController: UIViewController {
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(playpause), userInfo: nil, repeats: true)
             
+            playbutton.setTitle("停止", for: .normal)
             
             
             nextbutton.isEnabled = false    //ボタン無効
@@ -145,13 +150,15 @@ class ViewController: UIViewController {
             timer.invalidate()
             timer = nil
             
+            playbutton.setTitle("再生", for: .normal)
+            
             nextbutton.isEnabled = true     //ボタン有効
             backbutton.isEnabled = true     //ボタン有効
         }
         
         
         
-            imageview.image = UIImage(named: imageNames[imageIndex])
+        imageview.image = UIImage(named: imageNames[imageIndex])
         
     }
     
@@ -159,5 +166,5 @@ class ViewController: UIViewController {
     @IBAction func unwind(_ segue: UIStoryboardSegue) {
     }
     
-
-    }
+    
+}

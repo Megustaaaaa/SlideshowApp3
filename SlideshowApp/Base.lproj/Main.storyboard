@@ -38,7 +38,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="playbutton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFA-Xc-GnQ">
                                 <rect key="frame" x="140" y="293" width="94.5" height="30"/>
-                                <state key="normal" title="再生/停止"/>
+                                <state key="normal" title="再生"/>
                                 <connections>
                                     <action selector="playbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qIY-2E-wjI"/>
                                 </connections>
@@ -77,6 +77,7 @@
                         <outlet property="backbutton" destination="P0l-P7-Scd" id="8ER-ol-TPa"/>
                         <outlet property="imageview" destination="Z3e-Sw-4vG" id="E0G-tY-w9i"/>
                         <outlet property="nextbutton" destination="wX4-Q6-Cdh" id="7G1-Cn-dPx"/>
+                        <outlet property="playbutton" destination="WFA-Xc-GnQ" id="jWZ-uF-fYu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
