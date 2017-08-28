@@ -55,6 +55,8 @@ class ViewController: UIViewController {
             timer.invalidate()   // 現在のタイマーを破棄する
             timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
             
+            playbutton.setTitle("再生", for: .normal)
+            
             nextbutton.isEnabled = true     //ボタン有効
             backbutton.isEnabled = true     //ボタン有効
         }
@@ -110,7 +112,7 @@ class ViewController: UIViewController {
         imageIndex -= 1
         
         //最初の画像で戻るボタンを押すと最後の画像になる
-        if imageIndex >= -1 {
+        if imageIndex <= -1 {
             imageIndex = imageNames.count - 1
         }
         
